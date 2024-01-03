@@ -8,7 +8,19 @@ const data = [
   },
 ]
 const GradeTable = () => {
+  // const [lastTr, setLastTr] = useState(tr)
   const [gradeData, setGradeData] = useState(data)
+
+  // const getLastTr = () => {
+  //   const last = ("#gradeTable").find("tr").last()
+  //   setGradeData(last)
+  // }
+
+  const onAdd = () => {
+    "#gradeTable".find("tr").last().after(
+      "<tr><td><input name='grade' value={grade} placeholder='Grade' onChange={onChangeInput} onClick={onClickInput}></input></td><td><input name='credits' value={credits} placeholder='Credits' onChange={onChangeInput} onClick={onClickInput}></input></td></tr>"
+      );
+  }
 
   const onChangeInput = (e, rowIndex, colIndex) => {
     const {name, value} = e.target
@@ -24,7 +36,7 @@ const GradeTable = () => {
   }
 
   return (
-    <div class="table">
+    <div class="table" id="gradeTable">
       <table>
         <thead>
           <tr>
@@ -41,6 +53,7 @@ const GradeTable = () => {
           ))}
         </tbody>
       </table>
+      <button onClick={onAdd}>Add grade</button>
     </div>
   );
 }
