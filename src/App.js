@@ -1,17 +1,46 @@
 import './App.css';
 import { useState } from 'react';
 
-function GradeRow() {
+const data = [
+  {
+    grade: null,
+    credits: null
+  },
+]
+const GradeTable = () => {
+  const [gradeData, setGradeData] = useState(data)
+
+  const onChangeInput = (e, rowIndex, colIndex) => {
+    const {name, value} = e.target
+    const editData = gradeData.map((item) =>
+    item.rowIndex === rowIndex && item.colIndex === colIndex && name ? {...item, [name]: value}: item
+    )
+    setGradeData(editData)
+  }
+
+  const onClickInput = () => {
+    var rowIndex = this.closest("tr").index();
+    var colIndex = this.index();
+  }
+
   return (
-    <div class="row">
-      <div class="col">
-        <label class="col-label" for="col-grade">Grade</label>
-        <input type="text" class="col-input" id="col-grade"></input>
-      </div>
-      <div class="col">
-        <label class="col-label" for="col-credits">Credits</label>
-        <input type="text" class="col-input" id="col-credits"></input>
-      </div>
+    <div class="table">
+      <table>
+        <thead>
+          <tr>
+            <th>Grade</th>
+            <th>Credits</th>
+          </tr>
+        </thead>
+        <tbody>
+          {gradeData.map(({grade, credits}) => (
+            <tr>
+            <td><input name="grade" value={grade} placeholder="Grade" onChange={onChangeInput} onClick={onClickInput}></input></td>
+            <td><input name="credits" value={credits} placeholder="Credits" onChange={onChangeInput} onClick={onClickInput}></input></td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
     </div>
   );
 }
@@ -35,7 +64,7 @@ function App() {
     <div className="App">
       <h1>Grade Calculator: UBC</h1>
       <p>Please enter your current CPSC grades and credits:</p>
-      <GradeRow/>
+      <GradeTable/>
       <AddButton/>
     </div>
   );
